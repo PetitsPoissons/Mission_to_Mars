@@ -1,6 +1,7 @@
 from splinter import Browser
 from bs4 import BeautifulSoup
 import time
+import pandas as pd
 
 def init_browser():
     # @NOTE: Replace the path with your actual path to the chromedriver
@@ -55,6 +56,20 @@ def scrape():
         except AttributeError:
             pass          
     info_scraped["mars_weather"] = mars_weather
+
+    # Scrape Mars Facts
+    facts_url = 'https://space-facts.com/mars/'
+    # Scrape all tabular data from Mars facts page
+    tables = pd.read_html(facts_url)
+    # There's only one table in the Mars facts page
+    df = tables[0]
+    df.columns = ['description', 'value']
+    df.set_index('description', inplace=True)
+    # Convert dataframe to a HTML table string
+    html_table = df.to_html()
+    # Strip unwanted newlines
+    html_table.replace('\n', '')
+    info_scraped["html_table"] = html_table
 
     # Scrape Mars Hemispheres
     url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
