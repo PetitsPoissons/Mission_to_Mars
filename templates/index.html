@@ -20,6 +20,10 @@
     img {
       width: 100%;
     }
+    .border {
+      border-style: groove;
+      border-width: 1px;
+    }
   </style>
 </head>
 
@@ -55,7 +59,7 @@
         <div class="container">
           <!-- Mars Weather -->
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 border">
               <h5>Current Weather on Mars</h5>
               <p>{{ info.mars_weather }}</p>
             </div>
@@ -74,14 +78,19 @@
     <div class="row">
       <div class="col-md-12 text-center">
         <h3>Mars Hemispheres</h3>
+        <hr class="my-4">
       </div>
     </div>
     <div class="row d-inline-flex">
       <!-- for loop to access Mars hemispheres data -->
       {% for hemis in info.hemisphere_image_urls %}
       <div class="col-md-6 align-center">
-        <img src="{{ hemis.img_url }}" alt="{{ hemis.title }} (high res)"/>
-        <h5>{{ hemis.title }}</h5>
+        <div class="card">
+          <img class="card-img-top" src="{{ hemis.img_url }}" alt="{{ hemis.title }} (high res)"/>
+          <div class="card-body">
+              <h5>{{ hemis.title }}</h5>
+          </div>
+        </div>
       </div>
       {% endfor %}
     </div>
