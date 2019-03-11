@@ -1,6 +1,6 @@
 from splinter import Browser
 from bs4 import BeautifulSoup
-#import time
+import time
 
 def init_browser():
     # @NOTE: Replace the path with your actual path to the chromedriver
@@ -14,7 +14,7 @@ def scrape():
     # Scrape NASA Mars News
     nasa_url = 'https://mars.nasa.gov/news'
     browser.visit(nasa_url)
-    #time.sleep(1)
+    time.sleep(1)
     nasa_html = browser.html
     nasa_soup = BeautifulSoup(nasa_html, 'lxml')
     nasa_results = nasa_soup.find_all('li', class_='slide')
@@ -26,7 +26,7 @@ def scrape():
     # Scrape JPL Mars Space Images - Featured Image
     jpl_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(jpl_url)
-    #browser.is_element_present_by_id("full_image", 1)
+    browser.is_element_present_by_id("full_image", 1)
     jpl_html = browser.html
     jpl_soup = BeautifulSoup(jpl_html, 'lxml')
     img_src = jpl_soup.find(id='full_image')['data-fancybox-href']
@@ -69,7 +69,8 @@ def scrape():
         html = browser.html
         # Create BeautifulSoup object; parse with 'lxml'
         soup = BeautifulSoup(html, 'lxml')
-        img_url = soup.find(id='wide-image').find_all('a')[1]['href']
+        img_src = soup.find('img', class_='wide-image')['src']
+        img_url = 'https://astrogeology.usgs.gov' + img_src
         title = soup.find('h2', class_='title').get_text()
         # Append to list
         hemisphere_image_urls.append({'title': title, 'img_url': img_url})

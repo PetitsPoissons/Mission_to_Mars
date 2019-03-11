@@ -8,14 +8,17 @@
   <title>Mission to Mars</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <style>
+    html, body {
+      margin: 0 auto;
+      padding: 0;
+      width: 100%;
+      overflow-x: hidden;
+    }
     h5 {
       font-weight: bold;
     }
-    #featured_img {
+    img {
       width: 100%;
-    }
-    .card {
-      width: 20rem;
     }
   </style>
 </head>
@@ -44,7 +47,7 @@
       <!-- Featured Image -->
       <div class="col-md-8">
         <h3>Featured Mars Image</h3>
-        <img id="featured_img" src="{{ info.featured_image_url }}" alt="Large Size Featured Image from JPL Mars Space Images"/>
+        <img src="{{ info.featured_image_url }}" alt="Large Size Featured Image from JPL Mars Space Images"/>
       </div>
 
       <!-- Side Column -->
@@ -84,14 +87,12 @@
         <h3>Mars Hemispheres</h3>
       </div>
     </div>
-    <div class="row">
+    <div class="row d-inline-flex">
       <!-- for loop to access Mars hemispheres data -->
       {% for hemis in info.hemisphere_image_urls %}
-      <div class="card">
-        <img class="card-img-top" src="{{ hemis.img_url }}" alt="{{ hemis.title }} (high res)"/>
-        <div class="card-body">
-          <h5 class="card-title">{{ hemis.title }}</h5>
-        </div>
+      <div class="col-md-6 align-center">
+        <img src="{{ hemis.img_url }}" alt="{{ hemis.title }} (high res)"/>
+        <h5>{{ hemis.title }}</h5>
       </div>
       {% endfor %}
     </div>
